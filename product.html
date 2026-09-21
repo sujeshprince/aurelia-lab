@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product — Aurelia Lab</title>
+<meta name="description" content="Full ingredient list, published active concentrations and how-to-use instructions for every Aurelia Lab formula.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  Free delivery over ₹1,999 &nbsp;·&nbsp; 30-day returns &nbsp;·&nbsp; <strong>Complimentary routine consultation</strong>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+
+    <nav class="nav" data-nav id="mainNav" aria-label="Main navigation">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link is-active" href="shop.html">Shop all</a>
+      <a class="nav__link" href="index.html#concerns">Concerns</a>
+      <a class="nav__link" href="index.html#ingredients">Actives</a>
+      <a class="nav__link" href="quiz.html">Skin quiz</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="cart-btn" data-cart-open aria-label="Open shopping bag">
+        Bag <span class="cart-btn__count" data-cart-count data-empty="true">0</span>
+      </button>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle menu">
+        <span class="nav-toggle__bars"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <div id="pdpRoot"></div>
+
+  <div id="notFound" class="container" hidden>
+    <div class="empty-state" style="margin: 80px 0 120px;">
+      <h3>We couldn&rsquo;t find that formula</h3>
+      <p>The link may be out of date, or the product has been discontinued.</p>
+      <a class="btn btn--primary btn--sm" href="shop.html">Browse all products</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+        <p>Clinical skincare formulated in Copenhagen. Published concentrations, fragrance-free bases, refillable glass.</p>
+        <form class="footer-news" data-newsletter novalidate>
+          <label class="field__label" for="newsletterEmail">Join the list — 10% off your first order</label>
+          <div class="field">
+            <input class="field__input" id="newsletterEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field__error" role="alert"></span>
+          </div>
+          <button class="btn btn--light btn--sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">All products</a></li>
+          <li><a href="shop.html?category=Cleanser">Cleansers</a></li>
+          <li><a href="shop.html?category=Serum">Serums</a></li>
+          <li><a href="shop.html?category=Moisturizer">Moisturizers</a></li>
+          <li><a href="shop.html?category=SPF">Sunscreen</a></li>
+          <li><a href="shop.html?category=Treatment">Treatments</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="about.html">Our formulation standard</a></li>
+          <li><a href="index.html#ingredients">Ingredient index</a></li>
+          <li><a href="index.html#routine">Building a routine</a></li>
+          <li><a href="quiz.html">Skin quiz</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="contact.html#faq">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#faq">Refill programme</a></li>
+          <li><a href="about.html">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mb-0">© 2026 Aurelia Lab. A demonstration storefront — no orders are processed.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/home.js"></script>
+<script src="js/product.js"></script>
+</body>
+</html>

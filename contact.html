@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact &amp; FAQ — Aurelia Lab</title>
+<meta name="description" content="Ask our formulation team about interactions, pregnancy safety or routine building. Shipping, returns and refill questions answered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  Free delivery over ₹1,999 &nbsp;·&nbsp; 30-day returns &nbsp;·&nbsp; <strong>Complimentary routine consultation</strong>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+
+    <nav class="nav" data-nav id="mainNav" aria-label="Main navigation">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="shop.html">Shop all</a>
+      <a class="nav__link" href="index.html#concerns">Concerns</a>
+      <a class="nav__link" href="index.html#ingredients">Actives</a>
+      <a class="nav__link" href="quiz.html">Skin quiz</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link is-active" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="cart-btn" data-cart-open aria-label="Open shopping bag">
+        Bag <span class="cart-btn__count" data-cart-count data-empty="true">0</span>
+      </button>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle menu">
+        <span class="nav-toggle__bars"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="page-head">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Contact</span>
+      </nav>
+      <p class="eyebrow">We answer in under 24 hours</p>
+      <h1 class="section-title" style="font-size: clamp(2.2rem, 4.4vw, 3.4rem);">Talk to a formulator</h1>
+      <p class="lede">
+        Not a chatbot and not a script. Every message is read by someone on the formulation team
+        who can tell you whether two actives should be layered, and in what order.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="contact-layout">
+
+      <div>
+        <h2 class="section-title" style="font-size:1.7rem;">Direct lines</h2>
+        <p class="lede" style="font-size:15px;">
+          If your question is about an existing order, include the order number and we can
+          resolve it faster.
+        </p>
+
+        <dl class="contact-facts">
+          <div class="contact-fact">
+            <dt>Email</dt>
+            <dd>formulation@aurelialab.example</dd>
+          </div>
+          <div class="contact-fact">
+            <dt>Order support</dt>
+            <dd>orders@aurelialab.example</dd>
+          </div>
+          <div class="contact-fact">
+            <dt>Telephone</dt>
+            <dd>+45 32 00 00 00 &nbsp;·&nbsp; Mon&ndash;Fri, 09:00&ndash;17:00 CET</dd>
+          </div>
+          <div class="contact-fact">
+            <dt>Studio</dt>
+            <dd>Refshalevej 147, 1432 Copenhagen K, Denmark</dd>
+          </div>
+          <div class="contact-fact">
+            <dt>Press</dt>
+            <dd>press@aurelialab.example</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="contact-card">
+        <h2 class="section-title" style="font-size:1.5rem;">Send a message</h2>
+        <p class="muted" style="font-size:14px; margin-bottom:28px;">
+          Fields marked with an asterisk are required.
+        </p>
+
+        <form id="contactForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label class="field__label" for="cName">Name *</label>
+              <input class="field__input" type="text" id="cName" name="name" autocomplete="name" required>
+              <span class="field__error" role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field__label" for="cEmail">Email *</label>
+              <input class="field__input" type="email" id="cEmail" name="email" autocomplete="email" required>
+              <span class="field__error" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="cTopic">Topic *</label>
+            <select class="field__select" id="cTopic" name="topic" required>
+              <option value="">Choose a topic…</option>
+              <option value="routine">Building a routine</option>
+              <option value="interaction">Ingredient interactions</option>
+              <option value="order">An existing order</option>
+              <option value="returns">Returns or refills</option>
+              <option value="press">Press or partnership</option>
+            </select>
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="cSkin">Skin type (optional)</label>
+            <select class="field__select" id="cSkin" name="skin">
+              <option value="">Prefer not to say</option>
+              <option value="oily">Oily</option>
+              <option value="combination">Combination</option>
+              <option value="normal">Balanced</option>
+              <option value="dry">Dry</option>
+              <option value="sensitive">Reactive / sensitive</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="cMessage">Message *</label>
+            <textarea class="field__textarea" id="cMessage" name="message" required
+              placeholder="Tell us what you're using now and what you'd like to change."></textarea>
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label class="check" for="cConsent">
+              <input type="checkbox" id="cConsent" name="consent" required>
+              <span class="check__label">I agree that Aurelia Lab may reply to my message by email.</span>
+            </label>
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">Send message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================ FAQ ============================ -->
+  <section class="section section--mist" id="faq">
+    <div class="container container--narrow">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <p class="eyebrow">Common questions</p>
+          <h2 class="section-title">Answers, without the hedging</h2>
+        </div>
+      </div>
+
+      <div class="faq" data-reveal>
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              Can I use retinol and vitamin C together?
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>Yes, but not in the same layer. Use vitamin C in the morning and retinol at night. Both are pH-dependent and work at different pH ranges, so layering them directly can inactivate the vitamin C and increase irritation. Separating them by twelve hours gives you the full benefit of each.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              How long before I see a result?
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>Hydration and barrier comfort change within days. Pore appearance and oiliness typically shift between weeks two and four. Pigmentation and fine lines need a full twelve weeks, because you are waiting on cell turnover cycles rather than on the product itself. Take a photo in consistent lighting at the start — perception is unreliable over that timeframe.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              Are any products safe during pregnancy?
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>Avoid the Retinol 0.3% Night Serum and the BHA 2% Clarifying Solution. Everything else in the range is formulated without retinoids, and our azelaic, niacinamide and hyaluronic products are commonly used during pregnancy. This is general information, not medical advice — check with your doctor or midwife.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              What is the refill programme?
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>Keep the glass outer bottle and order refill pods, which ship in moulded paper and use roughly 78% less packaging. Return three empties and we apply 15% off your next order automatically. Refill pods cost 20% less than the original product.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              Shipping and returns
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>Orders ship from Copenhagen within 24 hours on business days. Delivery is free over ₹1,999 and takes two to four working days in the EU and three to six internationally. Returns are accepted for 30 days, including opened bottles — if a formula does not suit your skin, we would rather refund it than have you persevere with it.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false">
+              Do you test on animals?
+            </button>
+          </h3>
+          <div class="faq__a">
+            <p>No, and we never have. Aurelia Lab has held Leaping Bunny certification since launch, we do not sell in markets that require animal testing by law, and we audit our raw material suppliers annually to confirm the same standard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+        <p>Clinical skincare formulated in Copenhagen. Published concentrations, fragrance-free bases, refillable glass.</p>
+        <form class="footer-news" data-newsletter novalidate>
+          <label class="field__label" for="newsletterEmail">Join the list — 10% off your first order</label>
+          <div class="field">
+            <input class="field__input" id="newsletterEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field__error" role="alert"></span>
+          </div>
+          <button class="btn btn--light btn--sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">All products</a></li>
+          <li><a href="shop.html?category=Cleanser">Cleansers</a></li>
+          <li><a href="shop.html?category=Serum">Serums</a></li>
+          <li><a href="shop.html?category=Moisturizer">Moisturizers</a></li>
+          <li><a href="shop.html?category=SPF">Sunscreen</a></li>
+          <li><a href="shop.html?category=Treatment">Treatments</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="about.html">Our formulation standard</a></li>
+          <li><a href="index.html#ingredients">Ingredient index</a></li>
+          <li><a href="index.html#routine">Building a routine</a></li>
+          <li><a href="quiz.html">Skin quiz</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="contact.html#faq">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#faq">Refill programme</a></li>
+          <li><a href="about.html">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mb-0">© 2026 Aurelia Lab. A demonstration storefront — no orders are processed.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/forms.js"></script>
+</body>
+</html>

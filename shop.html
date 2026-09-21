@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop All — Aurelia Lab</title>
+<meta name="description" content="Browse all 16 Aurelia Lab formulas. Filter by skin concern, category and price, or search by ingredient.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  Free delivery over ₹1,999 &nbsp;·&nbsp; 30-day returns &nbsp;·&nbsp; <strong>Complimentary routine consultation</strong>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+
+    <nav class="nav" data-nav id="mainNav" aria-label="Main navigation">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link is-active" href="shop.html">Shop all</a>
+      <a class="nav__link" href="index.html#concerns">Concerns</a>
+      <a class="nav__link" href="index.html#ingredients">Actives</a>
+      <a class="nav__link" href="quiz.html">Skin quiz</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="cart-btn" data-cart-open aria-label="Open shopping bag">
+        Bag <span class="cart-btn__count" data-cart-count data-empty="true">0</span>
+      </button>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle menu">
+        <span class="nav-toggle__bars"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="page-head">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Shop all</span>
+      </nav>
+      <p class="eyebrow">The full range</p>
+      <h1 class="section-title" style="font-size: clamp(2.2rem, 4.4vw, 3.4rem);">All formulas</h1>
+      <p class="lede">
+        Sixteen products, each built around one clinically studied active. Filter by what your skin
+        is doing and we&rsquo;ll narrow it down.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- ======================= FILTERS ======================= -->
+      <aside class="filters" id="filters" aria-label="Product filters">
+        <div class="filters__head">
+          <h2>Filters</h2>
+          <button type="button" class="icon-btn" data-filter-close aria-label="Close filters">✕</button>
+        </div>
+
+        <div class="filter-group" data-group>
+          <button type="button" class="filter-group__head" data-group-toggle aria-expanded="true">Category</button>
+          <div class="filter-group__body" id="categoryFilters"></div>
+        </div>
+
+        <div class="filter-group" data-group>
+          <button type="button" class="filter-group__head" data-group-toggle aria-expanded="true">Skin concern</button>
+          <div class="filter-group__body" id="concernFilters"></div>
+        </div>
+
+        <div class="filter-group" data-group>
+          <button type="button" class="filter-group__head" data-group-toggle aria-expanded="true">Maximum price</button>
+          <div class="filter-group__body">
+            <div class="range">
+              <div class="range__value">
+                <span id="priceMinLabel">₹749</span>
+                <span id="priceMaxLabel">₹1,899</span>
+              </div>
+              <label class="visually-hidden" for="priceRange">Maximum price</label>
+              <input type="range" id="priceRange" min="20" max="68" step="1" value="68">
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group" style="border-bottom:0; padding-bottom:8px;">
+          <button type="button" class="link-btn" data-filter-reset>Clear all filters</button>
+        </div>
+      </aside>
+
+      <!-- ======================== RESULTS ====================== -->
+      <section aria-label="Products">
+        <div class="shop-toolbar">
+          <div class="shop-toolbar__left">
+            <button type="button" class="btn btn--ghost btn--sm filter-toggle" data-filter-open>
+              Filters <span id="filterCount"></span>
+            </button>
+            <p class="result-count" id="resultCount" role="status" aria-live="polite">Loading…</p>
+          </div>
+
+          <div class="shop-toolbar__right">
+            <div class="search-box">
+              <label class="visually-hidden" for="searchInput">Search products</label>
+              <input type="search" id="searchInput" placeholder="Search product or active…" autocomplete="off">
+              <span class="search-box__icon" aria-hidden="true">⌕</span>
+            </div>
+            <label class="visually-hidden" for="sortSelect">Sort products</label>
+            <select class="sort-select" id="sortSelect">
+              <option value="featured">Sort: Featured</option>
+              <option value="price-asc">Price: Low to high</option>
+              <option value="price-desc">Price: High to low</option>
+              <option value="rating">Top rated</option>
+              <option value="name">Name: A–Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="chips" id="activeChips"></div>
+
+        <div class="grid grid--products" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <h3>No formulas match that combination</h3>
+          <p>Try widening the price range or removing a concern.</p>
+          <button type="button" class="btn btn--ghost btn--sm" data-filter-reset>Clear all filters</button>
+        </div>
+
+        <div class="load-more-wrap">
+          <button type="button" class="btn btn--ghost" id="loadMore" hidden>Load more formulas</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</main>
+
+<div class="drawer-overlay" data-filter-overlay hidden></div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+        <p>Clinical skincare formulated in Copenhagen. Published concentrations, fragrance-free bases, refillable glass.</p>
+        <form class="footer-news" data-newsletter novalidate>
+          <label class="field__label" for="newsletterEmail">Join the list — 10% off your first order</label>
+          <div class="field">
+            <input class="field__input" id="newsletterEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field__error" role="alert"></span>
+          </div>
+          <button class="btn btn--light btn--sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">All products</a></li>
+          <li><a href="shop.html?category=Cleanser">Cleansers</a></li>
+          <li><a href="shop.html?category=Serum">Serums</a></li>
+          <li><a href="shop.html?category=Moisturizer">Moisturizers</a></li>
+          <li><a href="shop.html?category=SPF">Sunscreen</a></li>
+          <li><a href="shop.html?category=Treatment">Treatments</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="about.html">Our formulation standard</a></li>
+          <li><a href="index.html#ingredients">Ingredient index</a></li>
+          <li><a href="index.html#routine">Building a routine</a></li>
+          <li><a href="quiz.html">Skin quiz</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="contact.html#faq">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#faq">Refill programme</a></li>
+          <li><a href="about.html">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mb-0">© 2026 Aurelia Lab. A demonstration storefront — no orders are processed.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/home.js"></script>
+<script src="js/shop.js"></script>
+</body>
+</html>

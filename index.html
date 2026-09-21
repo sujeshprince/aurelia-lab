@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurelia Lab — Clinical Skincare, Formulated With Intent</title>
+<meta name="description" content="Aurelia Lab formulates high-performance, fragrance-free skincare with clinically meaningful concentrations of proven actives. Dermatologist tested, cruelty free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  Free delivery over ₹1,999 &nbsp;·&nbsp; 30-day returns &nbsp;·&nbsp; <strong>Complimentary routine consultation</strong>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+
+    <nav class="nav" data-nav id="mainNav" aria-label="Main navigation">
+      <a class="nav__link is-active" href="index.html">Home</a>
+      <a class="nav__link" href="shop.html">Shop all</a>
+      <a class="nav__link" href="#concerns">Concerns</a>
+      <a class="nav__link" href="#ingredients">Actives</a>
+      <a class="nav__link" href="quiz.html">Skin quiz</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="cart-btn" data-cart-open aria-label="Open shopping bag">
+        Bag <span class="cart-btn__count" data-cart-count data-empty="true">0</span>
+      </button>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu">
+        <span class="nav-toggle__bars"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="container">
+    <div class="hero">
+      <div class="hero__text">
+        <p class="eyebrow">Est. 2016 · Formulated in Copenhagen</p>
+        <h1 class="hero__title">Skincare that <em>proves</em> its claims.</h1>
+        <p class="lede">
+          Every Aurelia Lab formula is built around a single clinically studied active at a
+          concentration that actually does something — then buffered so your barrier survives it.
+          No fragrance. No filler. No theatre.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="shop.html">Shop the range</a>
+          <a class="btn btn--ghost" href="quiz.html">Take the skin quiz</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <strong>16</strong>
+            <span>Core formulas</span>
+          </div>
+          <div class="hero__stat">
+            <strong>100%</strong>
+            <span>Fragrance free</span>
+          </div>
+          <div class="hero__stat">
+            <strong>4.7</strong>
+            <span>Average rating</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__art">
+        <div id="heroArt" aria-hidden="true"></div>
+        <div class="hero__art-tag">
+          <div>
+            <strong>Niacinamide 5% Serum</strong>
+            <span>Pore refining · 30 ml</span>
+          </div>
+          <a class="arrow-link" href="product.html?id=niacinamide-5-serum">View</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== TRUST BAR ========================= -->
+  <section class="trust-bar">
+    <div class="container">
+      <div class="trust-bar__inner">
+        <div class="trust-item">
+          <span class="trust-item__mark" aria-hidden="true">✚</span>
+          <div>
+            <strong>Dermatologist tested</strong>
+            <span>Patch tested on sensitive and compromised skin.</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item__mark" aria-hidden="true">◇</span>
+          <div>
+            <strong>Fragrance &amp; essential-oil free</strong>
+            <span>Nothing added to make it smell like a spa.</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item__mark" aria-hidden="true">✓</span>
+          <div>
+            <strong>Cruelty free</strong>
+            <span>Leaping Bunny certified. Never sold in China.</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item__mark" aria-hidden="true">↺</span>
+          <div>
+            <strong>Refillable glass</strong>
+            <span>Return empties for 15% off your next order.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= BESTSELLERS ======================== -->
+  <section class="section container">
+    <div class="section-head" data-reveal>
+      <div class="section-head__text">
+        <p class="eyebrow">The essentials</p>
+        <h2 class="section-title">Most prescribed by our formulators</h2>
+        <p class="lede">The six formulas that make up the backbone of a routine — each one designed to work with the others.</p>
+      </div>
+      <a class="arrow-link" href="shop.html">All 16 products</a>
+    </div>
+
+    <div class="grid grid--3" id="featuredGrid" data-reveal></div>
+  </section>
+
+  <!-- ========================== CONCERNS ========================== -->
+  <section class="section section--mist" id="concerns">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <p class="eyebrow">Shop by concern</p>
+          <h2 class="section-title">Start with the problem, not the product</h2>
+          <p class="lede">Tell us what your skin is doing and we&rsquo;ll show you the actives that address it.</p>
+        </div>
+      </div>
+      <div class="concern-grid" id="concernGrid" data-reveal></div>
+    </div>
+  </section>
+
+  <!-- ========================= INGREDIENTS ======================== -->
+  <section class="section section--ink" id="ingredients">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <p class="eyebrow eyebrow--light">The actives</p>
+          <h2 class="section-title">Four molecules doing the real work</h2>
+          <p class="lede">We publish every concentration on the carton, because &ldquo;contains niacinamide&rdquo; means nothing without a number.</p>
+        </div>
+      </div>
+
+      <div class="ingredient-list" data-reveal>
+        <div class="ingredient-row">
+          <span class="ingredient-row__pct">5%</span>
+          <h3>Niacinamide</h3>
+          <p>Regulates sebum, tightens the look of pores and interrupts pigment transfer. We cap at 5% — the point where benefit plateaus and irritation begins.</p>
+        </div>
+        <div class="ingredient-row">
+          <span class="ingredient-row__pct">0.3%</span>
+          <h3>Encapsulated Retinol</h3>
+          <p>Time-released so it converts to retinoic acid slowly through the night, stimulating collagen without the peeling that sinks most retinol routines.</p>
+        </div>
+        <div class="ingredient-row">
+          <span class="ingredient-row__pct">2%</span>
+          <h3>Hyaluronic Acid</h3>
+          <p>Three molecular weights hydrate the surface, the mid-epidermis and the deeper layers at once. Applied to damp skin, it holds water where it belongs.</p>
+        </div>
+        <div class="ingredient-row">
+          <span class="ingredient-row__pct">15%</span>
+          <h3>L-Ascorbic Acid</h3>
+          <p>The only form of vitamin C with robust evidence behind it. Stabilised with ferulic acid and vitamin E so it stays potent to the last drop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== PROTOCOL ========================== -->
+  <section class="section container" id="routine">
+    <div class="section-head" data-reveal>
+      <div class="section-head__text">
+        <p class="eyebrow">The protocol</p>
+        <h2 class="section-title">Three steps. Every morning and night.</h2>
+        <p class="lede">A routine only works if you keep it. This is the shortest sequence that still delivers measurable change.</p>
+      </div>
+    </div>
+
+    <div class="protocol" data-reveal>
+      <div class="protocol__step">
+        <span class="protocol__num">01</span>
+        <h3>Cleanse</h3>
+        <p>Remove sunscreen, sebum and pollution without stripping the lipid barrier. Thirty seconds is enough.</p>
+        <a class="arrow-link" href="shop.html?category=Cleanser">Shop cleansers</a>
+      </div>
+      <div class="protocol__step">
+        <span class="protocol__num">02</span>
+        <h3>Treat</h3>
+        <p>Apply your one or two targeted actives to damp skin, then press — don&rsquo;t rub — until absorbed.</p>
+        <a class="arrow-link" href="shop.html?category=Serum">Shop serums</a>
+      </div>
+      <div class="protocol__step">
+        <span class="protocol__num">03</span>
+        <h3>Protect</h3>
+        <p>Seal with moisturiser, then finish with broad spectrum SPF every single morning. This is the step that compounds.</p>
+        <a class="arrow-link" href="shop.html?category=SPF">Shop SPF</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== TESTIMONIALS ======================== -->
+  <section class="section section--mist">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <div class="section-head__text">
+          <p class="eyebrow">Verified reviews</p>
+          <h2 class="section-title">What people actually report</h2>
+        </div>
+      </div>
+
+      <div class="quote-grid" data-reveal>
+        <blockquote class="quote">
+          <p class="quote__text">&ldquo;Six weeks on the retinol and the lines around my eyes have genuinely softened. No flaking at all, which has never happened to me before.&rdquo;</p>
+          <footer class="quote__meta">
+            <strong>Marguerite D.</strong>
+            Verified · Retinol 0.3% Night Serum
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <p class="quote__text">&ldquo;The BHA solution cleared the congestion along my jaw in about a month. I&rsquo;ve repurchased three times and stopped looking for anything else.&rdquo;</p>
+          <footer class="quote__meta">
+            <strong>Priya N.</strong>
+            Verified · BHA 2% Clarifying Solution
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <p class="quote__text">&ldquo;I have rosacea and react to almost everything. The azelaic serum is the first active my skin has tolerated long enough to see results.&rdquo;</p>
+          <footer class="quote__meta">
+            <strong>Tom H.</strong>
+            Verified · Azelaic Acid 10% Serum
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== CTA ============================== -->
+  <section class="section container">
+    <div class="cta-band" data-reveal>
+      <div>
+        <p class="eyebrow">Not sure where to start?</p>
+        <h2 class="section-title">Answer six questions. Get a routine.</h2>
+        <p class="lede">
+          Our skin quiz matches your barrier condition, concerns and texture preferences against
+          the catalogue, then builds a morning and evening sequence you can add to your bag in one click.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="quiz.html">Take the quiz</a>
+          <a class="btn btn--ghost" href="contact.html">Talk to a formulator</a>
+        </div>
+      </div>
+      <div class="grid grid--2">
+        <div>
+          <p class="mono muted">Morning</p>
+          <p class="mb-0">Cleanse · Vitamin C · Moisturise · SPF</p>
+        </div>
+        <div>
+          <p class="mono muted">Evening</p>
+          <p class="mb-0">Cleanse · Retinol or BHA · Moisturise</p>
+        </div>
+        <div>
+          <p class="mono muted">Barrier</p>
+          <p class="mb-0">Ceramides, squalane, panthenol</p>
+        </div>
+        <div>
+          <p class="mono muted">Never</p>
+          <p class="mb-0">Fragrance, drying alcohol, essential oils</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">Aurelia<em>Lab</em></a>
+        <p>Clinical skincare formulated in Copenhagen. Published concentrations, fragrance-free bases, refillable glass.</p>
+        <form class="footer-news" data-newsletter novalidate>
+          <label class="field__label" for="newsletterEmail">Join the list — 10% off your first order</label>
+          <div class="field">
+            <input class="field__input" id="newsletterEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <span class="field__error" role="alert"></span>
+          </div>
+          <button class="btn btn--light btn--sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">All products</a></li>
+          <li><a href="shop.html?category=Cleanser">Cleansers</a></li>
+          <li><a href="shop.html?category=Serum">Serums</a></li>
+          <li><a href="shop.html?category=Moisturizer">Moisturizers</a></li>
+          <li><a href="shop.html?category=SPF">Sunscreen</a></li>
+          <li><a href="shop.html?category=Treatment">Treatments</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="about.html">Our formulation standard</a></li>
+          <li><a href="index.html#ingredients">Ingredient index</a></li>
+          <li><a href="index.html#routine">Building a routine</a></li>
+          <li><a href="quiz.html">Skin quiz</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="contact.html#faq">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#faq">Refill programme</a></li>
+          <li><a href="about.html">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mb-0">© 2026 Aurelia Lab. A demonstration storefront — no orders are processed.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
