@@ -670,6 +670,7 @@ p:last-child { margin-bottom: 0; }
   z-index: var(--z-drawer);
   width: min(430px, 100vw);
   height: 100%;
+  height: 100dvh; /* mobile: keep drawer inside visible area (browser toolbar) */
   display: flex;
   flex-direction: column;
   background: var(--porcelain);
@@ -869,6 +870,7 @@ p:last-child { margin-bottom: 0; }
   z-index: var(--z-modal);
   width: min(460px, calc(100vw - 40px));
   max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px); /* mobile: modal never taller than visible area */
   overflow-y: auto;
   background: var(--porcelain);
   border: 1px solid var(--line);
@@ -2105,6 +2107,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 @media (max-width: 980px) {
+  .grid--3, .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero { grid-template-columns: 1fr; }
   .hero__art { aspect-ratio: 16 / 12; order: -1; }
   .cta-band { grid-template-columns: 1fr; gap: 32px; }
@@ -2135,6 +2138,7 @@ p:last-child { margin-bottom: 0; }
     background: var(--porcelain);
     border-right: 1px solid var(--line);
     padding: 24px 24px 40px;
+    height: 100dvh; /* mobile: drawer fills visible area, never under toolbar */
     overflow-y: auto;
     transform: translateX(-102%);
     transition: transform 340ms var(--ease);
@@ -2160,6 +2164,7 @@ p:last-child { margin-bottom: 0; }
 
 @media (max-width: 900px) {
   :root { --gutter: 20px; }
+  html { scroll-padding-top: 80px; } /* matches the 66px mobile header */
 
   .nav-toggle { display: inline-flex; }
 
@@ -2173,6 +2178,8 @@ p:last-child { margin-bottom: 0; }
     background: var(--porcelain);
     border-left: 1px solid var(--line);
     padding: 100px 30px 40px;
+    height: 100dvh; /* never extends under the mobile browser toolbar */
+    overflow-y: auto; /* landscape / short screens can scroll */
     transform: translateX(102%);
     transition: transform 340ms var(--ease);
     box-shadow: var(--shadow-lg);
@@ -2217,7 +2224,7 @@ p:last-child { margin-bottom: 0; }
   .shop-toolbar { align-items: stretch; }
   .shop-toolbar__right { width: 100%; }
   .search-box { max-width: none; }
-  .toast-stack { top: auto; bottom: 16px; right: 16px; left: 16px; width: auto; }
+  .toast-stack { top: auto; bottom: calc(16px + env(safe-area-inset-bottom)); right: 16px; left: 16px; width: auto; }
   .pdp__buy .btn { min-width: 100%; }
   .footer-top { grid-template-columns: 1fr; gap: 34px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
@@ -2231,10 +2238,11 @@ p:last-child { margin-bottom: 0; }
   .pdp__thumb { width: 60px; }
   .cart-drawer__head { padding: 18px; }
   .cart-drawer__body { padding: 8px 18px; }
-  .cart-drawer__foot { padding: 18px; }
+  .cart-drawer__foot { padding: 18px; padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 520px) {
+  h1 { font-size: 2.15rem; } /* page titles proportioned for small phones */
   .grid--products { grid-template-columns: 1fr; }
   .hero__art-tag { flex-direction: column; align-items: flex-start; gap: 8px; }
   .trust-bar__inner { grid-template-columns: 1fr; }
