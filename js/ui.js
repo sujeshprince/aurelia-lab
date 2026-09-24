@@ -329,6 +329,38 @@ var UI = (function () {
   }
 
   /* ------------------------------------------------------------------ */
+  /*  Zoom lock (best-effort)                                           */
+  /*  Disables pinch, double-tap, Ctrl-scroll and Ctrl +/- page zoom    */
+  /*  as requested. Note: some browsers keep zoom as an accessibility   */
+  /*  control and may still allow it — this blocks it where possible.   */
+  /* ------------------------------------------------------------------ */
+
+  function lockZoom() {
+    /* Pinch / multi-touch */
+    window.addEventListener('touchmove', function (event) {
+      if (event.touches && event.touches.length > 1) event.preventDefault();
+    }, { passive: false });
+
+    /* Ctrl + mouse-wheel zoom */
+    window.addEventListener('wheel', function (event) {
+      if (event.ctrlKey || event.metaKey) event.preventDefault();
+    }, { passive: false });
+
+    /* Trackpad pinch gesture (Safari / Chrome) */
+    window.addEventListener('gesturestart', function (event) { event.preventDefault(); });
+    window.addEventListener('gesturechange', function (event) { event.preventDefault(); });
+    window.addEventListener('gestureend', function (event) { event.preventDefault(); });
+
+    /* Ctrl + / Ctrl - / Ctrl 0 keys */
+    document.addEventListener('keydown', function (event) {
+      if ((event.ctrlKey || event.metaKey) &&
+          (event.key === '+' || event.key === '=' || event.key === '-' || event.key === '0')) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /*  Boot                                                              */
   /* ------------------------------------------------------------------ */
 
@@ -336,6 +368,7 @@ var UI = (function () {
     initHeader();
     initReveal();
     initNewsletter();
+    lockZoom();
   }
 
   if (document.readyState === 'loading') {

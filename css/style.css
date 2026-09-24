@@ -106,8 +106,23 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 20px);
+}
+
+button,
+a,
+input,
+select,
+textarea,
+label,
+.check,
+.filter-group__head,
+.qty__btn {
+  touch-action: manipulation;
 }
 
 body {
