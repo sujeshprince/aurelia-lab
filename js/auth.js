@@ -1,9 +1,13 @@
 /* ==========================================================================
    AURELIA LAB — auth.js
-   Client-side account demo: sign in / create account / sign out from a modal
-   injected into the header of every page. Users and the active session live
-   in localStorage only — there is no backend.
-   Depends on: ui.js (UI)
+   Account sign in / create / sign out from a modal injected into the header.
+
+   Two modes, automatically selected:
+   • LIVE — when the Supabase backend is configured (js/supabase.js ready):
+     real accounts with hashed, server-side passwords, session in the cloud.
+   • DEMO — otherwise: accounts and the session live in localStorage only,
+     so the site still works offline or before setup.
+   Depends on: ui.js (UI), supabase.js (Supa, optional)
    ========================================================================== */
 
 var Auth = (function () {
@@ -12,15 +16,18 @@ var Auth = (function () {
   var USERS_KEY = 'skincare.users.v1';
   var SESSION_KEY = 'skincare.session.v1';
 
+  var hasSupa = (typeof Supa !== 'undefined');
   var els = {};
   var lastFocus = null;
 
+  function liveMode() { return hasSupa && Supa.isReady(); }
+
   /* ------------------------------------------------------------------ */
-  /*  Persistence                                                       */
+  /*  Persistence (demo mode only)                                      */
   /* ------------------------------------------------------------------ */
 
   /* Tiny non-crypto hash so passwords are not stored in plain text.
-     This is a demonstration storefront — not real security. */
+     In live mode Supabase hashes passwords properly server-side. */
   function hashPassword(password) {
     var h = 5381;
     for (var i = 0; i < password.length; i++) {
@@ -49,7 +56,12 @@ var Auth = (function () {
     return null;
   }
 
+  /* ------------------------------------------------------------------ */
+  /*  Current user (works in both modes, synchronously)                  */
+  /* ------------------------------------------------------------------ */
+
   function currentUser() {
+    if (liveMode()) return Supa.currentUser();
     try {
       var raw = window.localStorage.getItem(SESSION_KEY);
       return raw ? (JSON.parse(raw) || null) : null;
@@ -66,11 +78,12 @@ var Auth = (function () {
 
   /* ------------------------------------------------------------------ */
   /*  Actions                                                           */
+  /*  Demo mode returns synchronously; live mode returns a Promise.      */
   /* ------------------------------------------------------------------ */
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
-  function register(fields) {
+  function validate(fields) {
     var errors = {};
     if (!fields.name || String(fields.name).trim().length < 2) {
       errors.name = 'Please enter your name.';
@@ -81,6 +94,11 @@ var Auth = (function () {
     if (!fields.password || String(fields.password).length < 8) {
       errors.password = 'Use at least 8 characters.';
     }
+    return errors;
+  }
+
+  function demoRegister(fields) {
+    var errors = validate(fields);
     if (Object.keys(errors).length) return { ok: false, errors: errors };
 
     if (findUser(fields.email)) {
@@ -101,7 +119,7 @@ var Auth = (function () {
     return { ok: true, user: user };
   }
 
-  function signIn(fields) {
+  function demoSignedIn(fields) {
     var email = String(fields.email || '').trim().toLowerCase();
     var password = String(fields.password || '');
 
@@ -119,8 +137,27 @@ var Auth = (function () {
     return { ok: true, user: user };
   }
 
+  function register(fields) {
+    if (liveMode()) return Supa.signUp(fields);
+    return demoRegister(fields);
+  }
+
+  function signIn(fields) {
+    if (liveMode()) return Supa.signIn(fields);
+    return demoSignedIn(fields);
+  }
+
   function signOut() {
-    clearSession();
+    if (liveMode()) {
+      Supa.signOut().then(function () {
+        renderHeader();
+        updateCartStatus();
+      });
+    } else {
+      clearSession();
+      renderHeader();
+      updateCartStatus();
+    }
     UI.toast('You\u2019ve been signed out.', 'info');
   }
 
@@ -178,6 +215,17 @@ var Auth = (function () {
   /*  Modal markup                                                      */
   /* ------------------------------------------------------------------ */
 
+  function noteText(guest) {
+    if (liveMode()) {
+      return guest
+        ? 'Accounts are secured with Supabase — passwords are hashed server-side.'
+        : 'Your account is stored securely in the cloud. Sign in on any device.';
+    }
+    return guest
+      ? 'Demo storefront \u2014 accounts live only in this browser until the backend is connected.'
+      : 'Demo storefront \u2014 session is stored on this device only.';
+  }
+
   function panelsHTML(active) {
     active = active || 'signin';
     var signinHidden = active === 'signin' ? '' : ' hidden';
@@ -205,7 +253,7 @@ var Auth = (function () {
             '<span class="field__error" role="alert" data-auth-error="password"></span>' +
           '</div>' +
           '<button class="btn btn--primary btn--block" type="submit">Sign in</button>' +
-          '<p class="auth-note">Demo storefront \u2014 accounts live only in this browser. Nothing is sent anywhere.</p>' +
+          '<p class="auth-note">' + noteText(true) + '</p>' +
         '</form>' +
       '</div>' +
 
@@ -229,7 +277,7 @@ var Auth = (function () {
             '<span class="field__hint">At least 8 characters.</span>' +
           '</div>' +
           '<button class="btn btn--primary btn--block" type="submit">Create account</button>' +
-          '<p class="auth-note">Free. Unlocks faster checkout in this demo. No marketing, ever.</p>' +
+          '<p class="auth-note">Free. Unlocks a saved bag and order history.</p>' +
         '</form>' +
       '</div>'
     );
@@ -245,7 +293,7 @@ var Auth = (function () {
         '</div>' +
       '</div>' +
       '<button type="button" class="btn btn--ghost btn--block" data-auth-signout>Sign out</button>' +
-      '<p class="auth-note">Session is stored on this device only.</p>'
+      '<p class="auth-note">' + noteText(false) + '</p>'
     );
   }
 
@@ -365,6 +413,36 @@ var Auth = (function () {
     });
   }
 
+  function afterSubmit(mode, result) {
+    renderErrors(mode, result.errors || {});
+
+    if (!result.ok) {
+      var firstError = els.modal.querySelector('[data-auth-form="' + mode + '"] .field.has-error input');
+      if (firstError) firstError.focus();
+      return false;
+    }
+
+    if (result.needsConfirmation) {
+      renderErrors(mode, {});
+      switchTab('signin');
+      renderErrors('signin', { password: 'A confirmation link was sent to your email. Click it, then sign in.' });
+      UI.toast('Check your inbox — confirm your email to activate your account.', 'info');
+      return true;
+    }
+
+    var user = result.user;
+    renderHeader();
+    updateCartStatus();
+    close();
+    UI.toast(
+      mode === 'signup'
+        ? 'Account created \u2014 welcome, ' + displayName(user) + '.'
+        : 'Signed in as ' + displayName(user) + '.',
+      'success'
+    );
+    return true;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     var form = event.target.closest('[data-auth-form]');
@@ -380,25 +458,40 @@ var Auth = (function () {
       return out;
     }
 
-    var result = mode === 'signup' ? register(read()) : signIn(read());
-    renderErrors(mode, result.errors || {});
-
-    if (!result.ok) {
-      var firstError = form.querySelector('.field.has-error input');
-      if (firstError) firstError.focus();
+    /* Client-side field validation first (shared by both modes). */
+    var fields = read();
+    var clientErrors = {};
+    if (!EMAIL_RE.test(String(fields.email || ''))) clientErrors.email = 'Enter a valid email address.';
+    if (!fields.password) clientErrors.password = 'Enter your password.';
+    if (mode === 'signup') {
+      if (!fields.name || String(fields.name).trim().length < 2) clientErrors.name = 'Please enter your name.';
+      if (String(fields.password).length < 8) clientErrors.password = 'Use at least 8 characters.';
+    }
+    if (Object.keys(clientErrors).length) {
+      renderErrors(mode, clientErrors);
+      var bad = els.modal.querySelector('[data-auth-form="' + mode + '"] .field.has-error input');
+      if (bad) bad.focus();
       return;
     }
 
-    var user = result.user;
-    renderHeader();
-    updateCartStatus();
-    close();
-    UI.toast(
-      mode === 'signup'
-        ? 'Account created \u2014 welcome, ' + displayName(user) + '.'
-        : 'Signed in as ' + displayName(user) + '.',
-      'success'
-    );
+    var result = mode === 'signup' ? register(fields) : signIn(fields);
+
+    if (result && typeof result.then === 'function') {
+      /* Live mode — async. Prevent double submits while in flight. */
+      form.classList.add('is-busy');
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+      result.then(function (res) {
+        afterSubmit(mode, res);
+      }).catch(function () {
+        afterSubmit(mode, { ok: false, errors: { password: 'Network error — please try again.' } });
+      }).then(function () {
+        form.classList.remove('is-busy');
+        if (submitBtn) submitBtn.disabled = false;
+      });
+    } else {
+      afterSubmit(mode, result);
+    }
   }
 
   /* ------------------------------------------------------------------ */
@@ -418,9 +511,15 @@ var Auth = (function () {
     }
 
     var user = currentUser();
-    chip.textContent = user
-      ? 'Signed in \u2014 ' + user.name + ' \u00b7 demo checkout'
-      : 'Guest checkout \u2014 no account required';
+    if (user) {
+      chip.textContent = liveMode()
+        ? 'Signed in \u2014 ' + user.name + ' \u00b7 bag saved to your account'
+        : 'Signed in \u2014 ' + user.name + ' \u00b7 demo checkout';
+    } else {
+      chip.textContent = liveMode()
+        ? 'Guest checkout \u2014 payments via Razorpay'
+        : 'Guest checkout \u2014 no account required';
+    }
   }
 
   /* ------------------------------------------------------------------ */
@@ -468,6 +567,15 @@ var Auth = (function () {
       if (event.target.closest('[data-auth-form]')) handleSubmit(event);
     });
 
+    /* When the cloud session changes (sign in from another tab, expiry, …)
+       keep the header and cart status in sync automatically. */
+    if (hasSupa && Supa.onAuthChange) {
+      Supa.onAuthChange(function () {
+        renderHeader();
+        updateCartStatus();
+      });
+    }
+
     renderHeader();
     updateCartStatus();
   }
@@ -488,6 +596,7 @@ var Auth = (function () {
     register: register,
     signIn: signIn,
     signOut: signOut,
+    liveMode: liveMode,
     renderHeader: renderHeader,
     updateCartStatus: updateCartStatus
   };

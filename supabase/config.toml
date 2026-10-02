@@ -1,0 +1,15 @@
+# =============================================================================
+# AURELIA LAB — Supabase project config
+# Used by the Supabase CLI for `supabase functions deploy` etc.
+# =============================================================================
+
+project_id = "aurelia-lab"
+
+[functions]
+verify_jwt = false
+
+[functions.create-order]
+verify_jwt = false
+
+[functions.verify-payment]
+verify_jwt = false

@@ -101,16 +101,33 @@
       var original = submit.textContent;
 
       submit.disabled = true;
-      submit.textContent = 'Sending…';
+      submit.textContent = 'Sending\u2026';
 
-      /* Demo storefront: no network request, just a convincing confirmation. */
-      setTimeout(function () {
+      var payload = {
+        name: (document.getElementById('cName').value || '').trim(),
+        email: (document.getElementById('cEmail').value || '').trim(),
+        subject: (document.getElementById('cTopic') ? document.getElementById('cTopic').value : '') || 'General enquiry',
+        skin_concern: (document.getElementById('cSkin') ? document.getElementById('cSkin').value : '') || '',
+        message: (document.getElementById('cMessage').value || '').trim()
+      };
+
+      function finish(ok) {
         submit.disabled = false;
         submit.textContent = original;
         form.reset();
         Array.prototype.forEach.call(controls, function (control) { setError(control, ''); });
-        UI.toast('Thanks ' + (name || 'there') + ' — your message is with our formulation team.', 'success');
-      }, 700);
+        if (ok) {
+          UI.toast('Thanks ' + (name || 'there') + ' \u2014 your message is with our formulation team.', 'success');
+        } else {
+          UI.toast('Could not send your message right now \u2014 please try again in a moment.', 'error');
+        }
+      }
+
+      if ((typeof Supa !== 'undefined') && Supa.isReady()) {
+        Supa.saveContact(payload).then(finish);
+      } else {
+        setTimeout(function () { finish(true); }, 700);
+      }
     });
   }
 

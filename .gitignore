@@ -1,0 +1,12 @@
+# Dependencies (test harness lives outside the repo)
+node_modules/
+
+# Local Supabase state — never commit secrets or the linked project ref
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+supabase/.env.local
+
+# Local env files
+.env
+.env.local

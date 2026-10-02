@@ -14,6 +14,7 @@ var Cart = (function () {
   var listeners = [];
   var els = {};
   var lastFocus = null;
+  var pushTimer = null;
 
   /* ------------------------------------------------------------------ */
   /*  Persistence                                                       */
@@ -47,6 +48,61 @@ var Cart = (function () {
     } catch (err) {
       /* Storage unavailable (private mode / disabled) — cart stays in memory. */
     }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Server sync (signed-in users, when the backend is connected)      */
+  /* ------------------------------------------------------------------ */
+
+  function serverActive() {
+    return (typeof Supa !== 'undefined') && Supa.isReady() && Supa.currentUser();
+  }
+
+  function mergeCarts(listA, listB) {
+    var map = {};
+    function add(list) {
+      (list || []).forEach(function (item) {
+        if (!item || !getProduct(item.id)) return;
+        var qty = Math.max(1, Math.floor(Number(item.qty)) || 1);
+        if (!qty) return;
+        map[item.id] = Math.min(99, (map[item.id] || 0) + qty);
+      });
+    }
+    add(listA);
+    add(listB);
+    return Object.keys(map).map(function (id) { return { id: id, qty: map[id] }; });
+  }
+
+  function push() {
+    if (!serverActive()) return;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(function () {
+      if (serverActive()) Supa.cartSave(items);
+    }, 350);
+  }
+
+  function pullFromServer() {
+    if (!(typeof Supa !== 'undefined') || !Supa.isReady()) return;
+    var user = Supa.currentUser();
+    if (!user) return;
+    Supa.cartLoad().then(function (serverItems) {
+      if (!serverItems || !serverItems.length) return;
+      items = mergeCarts(serverItems, items);
+      commit();
+    });
+  }
+
+  function handleAuthChange(user, event) {
+    if (!(typeof Supa !== 'undefined') || !Supa.isReady()) return;
+    if (!user || (event !== 'INITIAL_SESSION' && event !== 'SIGNED_IN')) return;
+    var hadLocal = items.length > 0;
+    Supa.cartLoad().then(function (serverItems) {
+      var merged = mergeCarts(serverItems, items);
+      if (merged.length !== items.length || hadLocal) {
+        items = merged;
+        commit();
+      }
+    });
   }
 
   /* ------------------------------------------------------------------ */
@@ -118,6 +174,7 @@ var Cart = (function () {
     save();
     render();
     notify();
+    push();
   }
 
   function notify() {
@@ -351,7 +408,11 @@ var Cart = (function () {
     });
     els.drawer.querySelector('[data-cart-checkout]').addEventListener('click', function () {
       if (!items.length) return;
-      UI.toast('This is a demo storefront \u2014 checkout is not connected.', 'info');
+      if (typeof Checkout !== 'undefined' && Checkout.open) {
+        Checkout.open();
+      } else {
+        UI.toast('This is a demo storefront \u2014 checkout is not connected.', 'info');
+      }
     });
 
     document.addEventListener('keydown', function (event) {
@@ -395,6 +456,13 @@ var Cart = (function () {
   function init() {
     load();
     mount();
+
+    /* Live accounts: load the saved bag from the cloud when signed in and
+       keep it in sync whenever the auth state changes. */
+    if (typeof Supa !== 'undefined' && Supa.isReady()) {
+      Supa.onAuthChange(handleAuthChange);
+      if (Supa.currentUser()) pullFromServer();
+    }
   }
 
   if (document.readyState === 'loading') {

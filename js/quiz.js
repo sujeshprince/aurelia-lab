@@ -374,6 +374,20 @@
     var maxScore = top[0] ? top[0].score : 1;
     var routine = buildRoutine(ranked);
 
+    /* Save the consultation to the account when connected and signed in. */
+    if ((typeof Supa !== 'undefined') && Supa.isReady()) {
+      var user = Supa.currentUser();
+      if (user) {
+        Supa.saveQuizResult({
+          user_id: user.id,
+          answers: profile,
+          skin_type: type,
+          concerns: concerns.map(function (c) { return String(c); }),
+          recommended: routine.map(function (p) { return p.id; })
+        });
+      }
+    }
+
     el.progress.hidden = true;
     el.steps.hidden = true;
     el.nav.hidden = true;

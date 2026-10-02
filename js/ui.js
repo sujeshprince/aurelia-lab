@@ -324,7 +324,15 @@ var UI = (function () {
       if (!valid) { input.focus(); return; }
 
       form.reset();
-      toast('You\u2019re on the list. Watch for 10% off your first order.', 'success');
+      if ((typeof Supa !== 'undefined') && Supa.isReady()) {
+        Supa.saveNewsletter(value).then(function (ok) {
+          toast(ok
+            ? 'You\u2019re on the list. Watch for 10% off your first order.'
+            : 'Could not subscribe right now \u2014 please try again in a moment.', ok ? 'success' : 'error');
+        });
+      } else {
+        toast('You\u2019re on the list. Watch for 10% off your first order.', 'success');
+      }
     });
   }
 
